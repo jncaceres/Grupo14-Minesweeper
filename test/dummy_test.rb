@@ -5,6 +5,6 @@ require 'test/unit'
 
 class DummyTest < Test::Unit::TestCase
   def test_true
-    assert_true(false)
+    assert_true(true)
   end
 end
