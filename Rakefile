@@ -7,7 +7,7 @@ task default: %w[lint test]
 task :test do
   # Añadir archivos de test aqui
   # ruby 'test/wallet_test.rb'
-  ruby 'test/dummy_test.rb'
+  ruby 'test/*.rb'
 end
 
 RuboCop::RakeTask.new(:lint) do |task|

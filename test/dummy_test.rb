@@ -4,7 +4,7 @@ require_relative 'test_helper'
 require 'test/unit'
 
 class DummyTest < Test::Unit::TestCase
-  def true_test
+  def test_true
     assert_true(false)
   end
 end
