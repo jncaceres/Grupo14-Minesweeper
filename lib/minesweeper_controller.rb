@@ -30,6 +30,7 @@ class MinesweeperController
 
   def move(x, y)
     @model.change_status(y, x)
+    @model.notify_all
     if @model.won
       @view.congratulations
     elsif @model.lose

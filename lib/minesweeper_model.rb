@@ -65,7 +65,7 @@ class MinesweeperModel < Observable
   def add_numbers(number)
     (0..number).step(1) do |row|
       (0..number).step(1) do |col|
-        if @mines_board[row][col].obtain_value != "*"
+        if @mines_board[row][col].obtain_value != '*'
           count = 0
           count += 1 if !(row - 1).negative? && !(col - 1).negative? && @mines_board[row - 1][col - 1].obtain_value == '*'
           count += 1 if !(row - 1).negative? && @mines_board[row - 1][col].obtain_value == '*'
@@ -93,7 +93,6 @@ class MinesweeperModel < Observable
       change_status(row + 1, col) if (row + 1) <= @number && @mines_board[row + 1][col].obtain_value != '*' && !@mines_board[row + 1][col].status
       change_status(row + 1, col + 1) if (row + 1) <= @number && (col + 1) <= @number && @mines_board[row + 1][col + 1].obtain_value != '*' && !@mines_board[row + 1][col + 1].status
     end
-    notify_all
   end
 
   def won
