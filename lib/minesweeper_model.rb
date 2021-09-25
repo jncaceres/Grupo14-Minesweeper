@@ -92,8 +92,6 @@ class MinesweeperModel < Observable
       change_status(row + 1, col - 1) if (row + 1) <= @number && !(col - 1).negative? && @mines_board[row + 1][col - 1].obtain_value != '*' && !@mines_board[row + 1][col - 1].status
       change_status(row + 1, col) if (row + 1) <= @number && @mines_board[row + 1][col].obtain_value != '*' && !@mines_board[row + 1][col].status
       change_status(row + 1, col + 1) if (row + 1) <= @number && (col + 1) <= @number && @mines_board[row + 1][col + 1].obtain_value != '*' && !@mines_board[row + 1][col + 1].status
-    elsif @mines_board[row][col].obtain_value == '*'
-      # perder
     end
     notify_all
   end
@@ -105,6 +103,15 @@ class MinesweeperModel < Observable
       end
     end
     true
+  end
+
+  def lose
+    (0..@number).step(1) do |row|
+      (0..@number).step(1) do |col|
+        return true if @mines_board[row][col].obtain_value == '*' && @mines_board[row][col].status
+      end
+    end
+    false
   end
 end
 

@@ -42,6 +42,10 @@ class MinesweeperView < Observer
     print "\n"
   end
 
+  def lose_msg
+    puts 'Haz perdido, gracias por haber jugado'
+  end
+
   def congratulations
     puts 'Haz ganado!!! Felicitaciones'
   end

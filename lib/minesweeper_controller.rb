@@ -32,6 +32,8 @@ class MinesweeperController
     @model.change_status(y, x)
     if @model.won
       @view.congratulations
+    elsif @model.lose
+      @view.lose_msg
     else
       request_move
     end
