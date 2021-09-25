@@ -15,13 +15,30 @@ class MinesweeperView < Observer
     print 'Ingresa la dificultad deseada:'
   end
 
+  def ask_next_move_x
+    puts 'Ingrese una coordenada x para revelar'
+  end
+
+  def ask_next_move_y
+    puts 'Ingrese una coordenada y para revelar'
+  end
+
+  def show_valid_values(max_number)
+    puts "Ingrese coordenadas entre 0 y #{max_number}"
+  end
+
   def print_board(minesweeper_model)
     (0..minesweeper_model.obtain_number).step(1) do |row|
       print "\n |"
       (0..minesweeper_model.obtain_number).step(1) do |col|
-        print minesweeper_model.obtain_mines_board[row][col].obtain_value
+        if minesweeper_model.obtain_mines_board[row][col].status
+          print minesweeper_model.obtain_mines_board[row][col].obtain_value
+        else
+          print " "
+        end
         print '|'
       end
     end
+    print "\n"
   end
 end

@@ -73,12 +73,16 @@ class MinesweeperModel < Observable
           count += 1 if !(col - 1).negative? && @mines_board[row][col - 1].obtain_value == '*'
           count += 1 if (col + 1) <= number && @mines_board[row][col + 1].obtain_value == '*'
           count += 1 if (row + 1) <= number && !(col - 1).negative? && @mines_board[row + 1][col - 1].obtain_value == '*'
-          count += 1 if (col + 1) <= number && @mines_board[row][col + 1].obtain_value == '*'
+          count += 1 if (row + 1) <= number && @mines_board[row + 1][col].obtain_value == '*'
           count += 1 if (row + 1) <= number && (col + 1) <= number && @mines_board[row + 1][col + 1].obtain_value == '*'
           @mines_board[row][col].give_value(count)
         end
       end
     end
+  end
+
+  def change_status(row, col)
+    @mines_board[row][col].show
   end
 end
 
@@ -95,6 +99,10 @@ class Cell
 
   def show
     @show = true
+  end
+
+  def status
+    @show
   end
 
   def obtain_value

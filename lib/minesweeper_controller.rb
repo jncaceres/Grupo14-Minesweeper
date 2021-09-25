@@ -16,6 +16,26 @@ class MinesweeperController
     init_board(difficult)
   end
 
+  def request_move
+    x, y = -1, -1
+    until valid_move(x, y)
+      @view.show_valid_values(@model.obtain_number)
+      @view.ask_next_move_x
+      x = $stdin.gets.to_i
+      @view.ask_next_move_y
+      y = $stdin.gets.to_i
+    end
+    @model.change_status(x, y)
+    @view.print_board(@model)
+  end
+
+  def valid_move(x, y)
+    if !x.negative? && x <= @model.obtain_number && !y.negative? && y <= @model.obtain_number
+      return true
+    end
+    return false
+  end
+
   def init_board(difficult)
     @model.init_board(difficult)
     @view.print_board(@model)
