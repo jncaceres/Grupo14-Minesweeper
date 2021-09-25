@@ -5,7 +5,7 @@ require_relative './observer/observer'
 # Vista del juego
 class MinesweeperView < Observer
   def update(minesweeper_model)
-    # Realizar update de la vista
+    print_board(minesweeper_model)
   end
 
   def show_difficults
@@ -34,11 +34,15 @@ class MinesweeperView < Observer
         if minesweeper_model.obtain_mines_board[row][col].status
           print minesweeper_model.obtain_mines_board[row][col].obtain_value
         else
-          print " "
+          print ' '
         end
         print '|'
       end
     end
     print "\n"
+  end
+
+  def congratulations
+    puts 'Haz ganado!!! Felicitaciones'
   end
 end

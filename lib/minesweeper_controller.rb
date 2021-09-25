@@ -24,9 +24,17 @@ class MinesweeperController
       x = $stdin.gets.to_i
       @view.ask_next_move_y
       y = $stdin.gets.to_i
+      move(x, y)
     end
-    @model.change_status(x, y)
-    @view.print_board(@model)
+  end
+
+  def move(x, y)
+    @model.change_status(y, x)
+    if @model.won
+      @view.congratulations
+    else
+      request_move
+    end
   end
 
   def valid_move(x, y)
