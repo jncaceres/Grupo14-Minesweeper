@@ -9,7 +9,4 @@ view = MinesweeperView.new
 model.add_observer(view)
 controller = MinesweeperController.new(model, view)
 controller.request_difficult
-
-while true
-  controller.request_move
-end
+controller.request_move
