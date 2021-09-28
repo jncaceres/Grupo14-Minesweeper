@@ -26,4 +26,15 @@ class MinesweeperModelTest < Test::Unit::TestCase
     assert_equal(16, model_2.obtain_mines_board.length())
   end
 
+  def test_amount_of_mines
+    model_1 = MinesweeperModel.new
+    assert_equal(0, model_1.obtain_positions.length())
+    model_1.init_board(1)
+    assert_equal(10, model_1.obtain_positions.length())
+    model_2 = MinesweeperModel.new
+    model_2.init_board(2)
+    assert_equal(40, model_2.obtain_positions.length())
+  end
+
+
 end
