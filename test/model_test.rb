@@ -5,7 +5,7 @@ require_relative '../lib/minesweeper_model'
 require 'test/unit'
 
 class MinesweeperModelTest < Test::Unit::TestCase
-  srand(123)
+
   def test_number_assign
     model_1 = MinesweeperModel.new
     assert_equal(0, model_1.obtain_number)
@@ -34,6 +34,27 @@ class MinesweeperModelTest < Test::Unit::TestCase
     model_2 = MinesweeperModel.new
     model_2.init_board(2)
     assert_equal(40, model_2.obtain_positions.length())
+  end
+
+  def test_lose
+    srand(123)
+    model = MinesweeperModel.new
+    model.init_board(1)
+    # se que en esta posición NO hay una mina
+    model.change_status(0, 0)
+    assert_false(model.lose)
+    # se que en esta posición hay una mina
+    model.change_status(1, 0)
+    assert_true(model.lose)
+  end
+
+  def test_not_won
+    srand(123)
+    model = MinesweeperModel.new
+    model.init_board(1)
+    # se que en esta posición NO hay una mina
+    model.change_status(0, 0)
+    assert_false(model.won)
   end
 
 
