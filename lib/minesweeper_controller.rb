@@ -2,6 +2,8 @@
 
 # Controlador del juego
 class MinesweeperController
+  attr_accessor :model, :view
+  
   def initialize(minesweeper_model, minesweeper_view)
     @model = minesweeper_model
     @view = minesweeper_view

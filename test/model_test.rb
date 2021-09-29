@@ -2,6 +2,8 @@
 
 require_relative 'test_helper'
 require_relative '../lib/minesweeper_model'
+require_relative '../lib/minesweeper_controller'
+require_relative './controller_test'
 require 'test/unit'
 
 class MinesweeperModelTest < Test::Unit::TestCase
@@ -55,6 +57,22 @@ class MinesweeperModelTest < Test::Unit::TestCase
     # se que en esta posición NO hay una mina
     model.change_status(0, 0)
     assert_false(model.won)
+  end
+  def test_won
+    srand(123)
+    model = MinesweeperModel.new
+    model.init_board(1)
+    #recorro todas las posiciones sin minas menos la 0,0
+    (0..model.obtain_number).step(1) do |row|
+      (0..model.obtain_number).step(1) do |col|
+        if model.obtain_mines_board[row][col].obtain_value != '*' && !model.obtain_mines_board[row][col].status
+          model.change_status(row,col) unless row==0 && col==0
+        end
+      end
+    end
+    # se que en esta posición NO hay una mina
+    model.change_status(0,0)
+    assert_true(model.won)
   end
 
 
