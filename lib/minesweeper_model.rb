@@ -18,6 +18,10 @@ class MinesweeperModel < Observable
     @mines_board
   end
 
+  def obtain_positions
+    @positions
+  end
+
   def init_board(difficult)
     if difficult == 1
       @number = 7
