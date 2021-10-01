@@ -8,6 +8,7 @@ class MinesweeperView < Observer
 
   def initialize
     @difficult = 0
+    super()
   end
 
   def update(minesweeper_model)
@@ -41,17 +42,22 @@ class MinesweeperView < Observer
     puts "Ingrese coordenadas entre 0 y #{max_number}"
   end
 
+  ## Valor  Celda | VALUE |
+  def print_cell(minesweeper_model, row)
+    (0..minesweeper_model.obtain_number).step(1) do |col|
+      if minesweeper_model.obtain_mines_board[row][col].status
+        print minesweeper_model.obtain_mines_board[row][col].obtain_value
+      else
+        print ' '
+      end
+      print '|'
+    end
+  end
+
   def print_board(minesweeper_model)
     (0..minesweeper_model.obtain_number).step(1) do |row|
       print "\n |"
-      (0..minesweeper_model.obtain_number).step(1) do |col|
-        if minesweeper_model.obtain_mines_board[row][col].status
-          print minesweeper_model.obtain_mines_board[row][col].obtain_value
-        else
-          print ' '
-        end
-        print '|'
-      end
+      print_cell(minesweeper_model, row)
     end
     print "\n"
   end

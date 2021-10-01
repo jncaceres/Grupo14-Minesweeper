@@ -81,10 +81,10 @@ class MinesweeperModel < Observable
     coordenates -= [[-1, -1], [0, -1], [1, -1]] if (col - 1).negative?
     coordenates -= [[1, -1], [1, 1], [1, 0]] if (row + 1) > number
     coordenates -= [[-1, 1], [0, 1], [1, 1]] if (col + 1) > number
-  
+
     count_mines(row, col, coordenates)
   end
-  
+
   def count_mines(row, col, coordenates)
     count = 0
     coordenates.each do |coor|
