@@ -11,14 +11,6 @@ class MinesweeperController
     @pos_y = -1
   end
 
-  # def request_difficult
-  #   until [1, 2].include?(difficult)
-  #     @view.show_difficults
-  #     @difficult = $stdin.gets.to_i
-  #   end
-  #   init_board(@difficult)
-  # end
-
   def request_move
     until valid_move(pos_x, pos_y)
       @view.show_valid_values(@model.obtain_number)

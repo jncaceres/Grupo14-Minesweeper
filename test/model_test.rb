@@ -9,32 +9,32 @@ class MinesweeperModelTest < Test::Unit::TestCase
 
   def test_number_assign
     model_1 = MinesweeperModel.new
-    assert_equal(0, model_1.obtain_number)
+    assert_equal(0, model_1.number)
     model_1.init_board(1)
-    assert_equal(7, model_1.obtain_number)
+    assert_equal(7, model_1.number)
     model_2 = MinesweeperModel.new
     model_2.init_board(2)
-    assert_equal(15, model_2.obtain_number)
+    assert_equal(15, model_2.number)
   end
 
   def test_board_len
     model_1 = MinesweeperModel.new
-    assert_equal(0, model_1.obtain_mines_board.length())
+    assert_equal(0, model_1.mines_board.length())
     model_1.init_board(1)
-    assert_equal(8, model_1.obtain_mines_board.length())
+    assert_equal(8, model_1.mines_board.length())
     model_2 = MinesweeperModel.new
     model_2.init_board(2)
-    assert_equal(16, model_2.obtain_mines_board.length())
+    assert_equal(16, model_2.mines_board.length())
   end
 
   def test_amount_of_mines
     model_1 = MinesweeperModel.new
-    assert_equal(0, model_1.obtain_positions.length())
+    assert_equal(0, model_1.positions.length())
     model_1.init_board(1)
-    assert_equal(10, model_1.obtain_positions.length())
+    assert_equal(10, model_1.positions.length())
     model_2 = MinesweeperModel.new
     model_2.init_board(2)
-    assert_equal(40, model_2.obtain_positions.length())
+    assert_equal(40, model_2.positions.length())
   end
 
   def test_lose
@@ -63,9 +63,9 @@ class MinesweeperModelTest < Test::Unit::TestCase
     model = MinesweeperModel.new
     model.init_board(1)
     #recorro todas las posiciones sin minas menos la 0,0
-    (0..model.obtain_number).step(1) do |row|
-      (0..model.obtain_number).step(1) do |col|
-        if model.obtain_mines_board[row][col].obtain_value != '*' && !model.obtain_mines_board[row][col].status
+    (0..model.number).step(1) do |row|
+      (0..model.number).step(1) do |col|
+        if model.mines_board[row][col].obtain_value != '*' && !model.mines_board[row][col].status
           model.change_status(row,col) unless row==0 && col==0
         end
       end

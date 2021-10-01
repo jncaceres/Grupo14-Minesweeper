@@ -3,23 +3,13 @@
 require_relative './observer/observable'
 # Modelo del juego
 class MinesweeperModel < Observable
+  attr_accessor :mines_board, :positions, :number
+
   def initialize
     @mines_board = []
     @positions = []
     @number = 0
     super()
-  end
-
-  def obtain_number
-    @number
-  end
-
-  def obtain_mines_board
-    @mines_board
-  end
-
-  def obtain_positions
-    @positions
   end
 
   def init_board(difficult)
