@@ -3,7 +3,7 @@
 require 'rubocop/rake_task'
 require 'rake/testtask'
 
-task default: %w[lint test]
+task default: %w[lint test:all]
 
 # task :test do
 #   # Añadir archivos de test aqui
