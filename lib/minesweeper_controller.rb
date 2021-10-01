@@ -3,7 +3,7 @@
 # Controlador del juego
 class MinesweeperController
   attr_accessor :model, :view, :pos_x, :pos_y
-  
+
   def initialize(minesweeper_model, minesweeper_view)
     @model = minesweeper_model
     @view = minesweeper_view
@@ -11,7 +11,7 @@ class MinesweeperController
     @pos_y = -1
   end
 
-  # def request_difficult  
+  # def request_difficult
   #   until [1, 2].include?(difficult)
   #     @view.show_difficults
   #     @difficult = $stdin.gets.to_i
@@ -32,8 +32,8 @@ class MinesweeperController
     @pos_y = -1
   end
 
-  def move(x, y)
-    @model.change_status(y, x)
+  def move(move_x, move_y)
+    @model.change_status(move_y, move_x)
     @model.notify_all
     if @model.won
       @view.congratulations
@@ -44,11 +44,12 @@ class MinesweeperController
     end
   end
 
-  def valid_move(x, y)
-    if !x.negative? && x <= @model.obtain_number && !y.negative? && y <= @model.obtain_number
+  def valid_move(valid_x, valid_y)
+    if !valid_x.negative? && valid_x <= @model.obtain_number && !valid_y.negative? && valid_y <= @model.obtain_number
       return true
     end
-    return false
+
+    false
   end
 
   def init_board(difficult)

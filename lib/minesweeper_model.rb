@@ -71,12 +71,18 @@ class MinesweeperModel < Observable
       (0..number).step(1) do |col|
         if @mines_board[row][col].obtain_value != '*'
           count = 0
-          count += 1 if !(row - 1).negative? && !(col - 1).negative? && @mines_board[row - 1][col - 1].obtain_value == '*'
+          if !(row - 1).negative? && !(col - 1).negative? && @mines_board[row - 1][col - 1].obtain_value == '*'
+            count += 1
+          end
           count += 1 if !(row - 1).negative? && @mines_board[row - 1][col].obtain_value == '*'
-          count += 1 if !(row - 1).negative? && (col + 1) <= number && @mines_board[row - 1][col + 1].obtain_value == '*'
+          if !(row - 1).negative? && (col + 1) <= number && @mines_board[row - 1][col + 1].obtain_value == '*'
+            count += 1
+          end
           count += 1 if !(col - 1).negative? && @mines_board[row][col - 1].obtain_value == '*'
           count += 1 if (col + 1) <= number && @mines_board[row][col + 1].obtain_value == '*'
-          count += 1 if (row + 1) <= number && !(col - 1).negative? && @mines_board[row + 1][col - 1].obtain_value == '*'
+          if (row + 1) <= number && !(col - 1).negative? && @mines_board[row + 1][col - 1].obtain_value == '*'
+            count += 1
+          end
           count += 1 if (row + 1) <= number && @mines_board[row + 1][col].obtain_value == '*'
           count += 1 if (row + 1) <= number && (col + 1) <= number && @mines_board[row + 1][col + 1].obtain_value == '*'
           @mines_board[row][col].give_value(count)
@@ -88,14 +94,38 @@ class MinesweeperModel < Observable
   def change_status(row, col)
     @mines_board[row][col].show
     if (@mines_board[row][col].obtain_value.is_a? Numeric) && @mines_board[row][col].obtain_value.zero?
-      change_status(row - 1, col - 1) if !(row - 1).negative? && !(col - 1).negative? && @mines_board[row - 1][col - 1].obtain_value != '*' && !@mines_board[row - 1][col - 1].status
-      change_status(row - 1, col) if !(row - 1).negative? && @mines_board[row - 1][col].obtain_value != '*' && !@mines_board[row - 1][col].status
-      change_status(row - 1, col + 1) if !(row - 1).negative? && (col + 1) <= @number && @mines_board[row - 1][col + 1].obtain_value != '*' && !@mines_board[row - 1][col + 1].status
-      change_status(row, col - 1) if !(col - 1).negative? && @mines_board[row][col - 1].obtain_value != '*' && !@mines_board[row][col - 1].status
-      change_status(row, col + 1) if (col + 1) <= @number && @mines_board[row][col + 1].obtain_value != '*' && !@mines_board[row][col + 1].status
-      change_status(row + 1, col - 1) if (row + 1) <= @number && !(col - 1).negative? && @mines_board[row + 1][col - 1].obtain_value != '*' && !@mines_board[row + 1][col - 1].status
-      change_status(row + 1, col) if (row + 1) <= @number && @mines_board[row + 1][col].obtain_value != '*' && !@mines_board[row + 1][col].status
-      change_status(row + 1, col + 1) if (row + 1) <= @number && (col + 1) <= @number && @mines_board[row + 1][col + 1].obtain_value != '*' && !@mines_board[row + 1][col + 1].status
+      if !(row - 1).negative? && !(col - 1).negative? && @mines_board[row - 1][col - 1].obtain_value != '*' && !@mines_board[row - 1][col - 1].status
+        change_status(row - 1,
+                      col - 1)
+      end
+      if !(row - 1).negative? && @mines_board[row - 1][col].obtain_value != '*' && !@mines_board[row - 1][col].status
+        change_status(row - 1,
+                      col)
+      end
+      if !(row - 1).negative? && (col + 1) <= @number && @mines_board[row - 1][col + 1].obtain_value != '*' && !@mines_board[row - 1][col + 1].status
+        change_status(row - 1,
+                      col + 1)
+      end
+      if !(col - 1).negative? && @mines_board[row][col - 1].obtain_value != '*' && !@mines_board[row][col - 1].status
+        change_status(row,
+                      col - 1)
+      end
+      if (col + 1) <= @number && @mines_board[row][col + 1].obtain_value != '*' && !@mines_board[row][col + 1].status
+        change_status(row,
+                      col + 1)
+      end
+      if (row + 1) <= @number && !(col - 1).negative? && @mines_board[row + 1][col - 1].obtain_value != '*' && !@mines_board[row + 1][col - 1].status
+        change_status(row + 1,
+                      col - 1)
+      end
+      if (row + 1) <= @number && @mines_board[row + 1][col].obtain_value != '*' && !@mines_board[row + 1][col].status
+        change_status(row + 1,
+                      col)
+      end
+      if (row + 1) <= @number && (col + 1) <= @number && @mines_board[row + 1][col + 1].obtain_value != '*' && !@mines_board[row + 1][col + 1].status
+        change_status(row + 1,
+                      col + 1)
+      end
     end
   end
 

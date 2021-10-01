@@ -2,11 +2,11 @@
 
 # Clase para los observados
 class Observable
-  attr_accessor :isCalledNotifyAll
+  attr_accessor :is_called_notify_all
 
   def initialize
     @observers = []
-    @isCalledNotifyAll = 0 # Se crea con motivos de testing
+    @is_called_notify_all = 0 # Se crea con motivos de testing
   end
 
   def add_observer(observer)
@@ -15,6 +15,6 @@ class Observable
 
   def notify_all
     @observers.each { |observer| observer.update(self) }
-    @isCalledNotifyAll = 1 # Se ha llamado a la función
+    @is_called_notify_all = 1 # Se ha llamado a la función
   end
 end
