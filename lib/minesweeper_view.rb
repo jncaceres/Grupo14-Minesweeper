@@ -44,7 +44,7 @@ class MinesweeperView < Observer
 
   ## Valor  Celda | VALUE |
   def print_cell(minesweeper_model, row)
-    (0..minesweeper_model.obtain_number).step(1) do |col|
+    (0..minesweeper_model.number).step(1) do |col|
       if minesweeper_model.mines_board[row][col].status
         print minesweeper_model.mines_board[row][col].obtain_value
       else
@@ -55,7 +55,7 @@ class MinesweeperView < Observer
   end
 
   def print_board(minesweeper_model)
-    (0..minesweeper_model.obtain_number).step(1) do |row|
+    (0..minesweeper_model.number).step(1) do |row|
       print "\n |"
       print_cell(minesweeper_model, row)
     end

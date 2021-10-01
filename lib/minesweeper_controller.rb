@@ -13,7 +13,7 @@ class MinesweeperController
 
   def request_move
     until valid_move(pos_x, pos_y)
-      @view.show_valid_values(@model.obtain_number)
+      @view.show_valid_values(@model.number)
       @view.ask_next_move_x
       @pos_x = $stdin.gets.to_i
       @view.ask_next_move_y
@@ -37,9 +37,7 @@ class MinesweeperController
   end
 
   def valid_move(valid_x, valid_y)
-    if !valid_x.negative? && valid_x <= @model.obtain_number && !valid_y.negative? && valid_y <= @model.obtain_number
-      return true
-    end
+    return true if !valid_x.negative? && valid_x <= @model.number && !valid_y.negative? && valid_y <= @model.number
 
     false
   end
