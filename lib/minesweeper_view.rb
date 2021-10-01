@@ -4,6 +4,12 @@ require_relative './observer/observer'
 
 # Vista del juego
 class MinesweeperView < Observer
+  attr_accessor :difficult
+
+  def initialize
+    @difficult = 0
+  end
+
   def update(minesweeper_model)
     print_board(minesweeper_model)
   end
@@ -13,6 +19,14 @@ class MinesweeperView < Observer
     puts 'Dificultades:'
     puts "1) Facil (8x8 y 10 minas) \n2) Dificil(16x16 y 40 minas)"
     print 'Ingresa la dificultad deseada:'
+  end
+
+  # Inicialmente se encontraba en controller pero por test se cambia a view
+  def request_difficult
+    until [1, 2].include?(difficult)
+      show_difficults
+      @difficult = $stdin.gets.to_i
+    end
   end
 
   def ask_next_move_x
