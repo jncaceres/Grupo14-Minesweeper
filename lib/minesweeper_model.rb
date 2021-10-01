@@ -17,10 +17,10 @@ class MinesweeperModel < Observable
       @number = 7
       create_board(@number)
     end
-    if difficult == 2
-      @number = 15
-      create_board(@number)
-    end
+    return unless difficult == 2
+
+    @number = 15
+    create_board(@number)
   end
 
   def create_board(number)
@@ -37,11 +37,7 @@ class MinesweeperModel < Observable
   end
 
   def obtain_mines_positions(number)
-    mines = if number == 7
-              10
-            else
-              40
-            end
+    mines = number == 7 ? 10 : 40
     while @positions.length != mines
       x = rand(number + 1)
       y = rand(number + 1)
