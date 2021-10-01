@@ -6,35 +6,34 @@ require_relative '../lib/minesweeper_controller'
 require 'test/unit'
 
 class MinesweeperModelTest < Test::Unit::TestCase
-
   def test_number_assign
-    model_1 = MinesweeperModel.new
-    assert_equal(0, model_1.number)
-    model_1.init_board(1)
-    assert_equal(7, model_1.number)
-    model_2 = MinesweeperModel.new
-    model_2.init_board(2)
-    assert_equal(15, model_2.number)
+    model_one = MinesweeperModel.new
+    assert_equal(0, model_one.number)
+    model_one.init_board(1)
+    assert_equal(7, model_one.number)
+    model_two = MinesweeperModel.new
+    model_two.init_board(2)
+    assert_equal(15, model_two.number)
   end
 
   def test_board_len
-    model_1 = MinesweeperModel.new
-    assert_equal(0, model_1.mines_board.length())
-    model_1.init_board(1)
-    assert_equal(8, model_1.mines_board.length())
-    model_2 = MinesweeperModel.new
-    model_2.init_board(2)
-    assert_equal(16, model_2.mines_board.length())
+    model_one = MinesweeperModel.new
+    assert_equal(0, model_one.mines_board.length)
+    model_one.init_board(1)
+    assert_equal(8, model_one.mines_board.length)
+    model_two = MinesweeperModel.new
+    model_two.init_board(2)
+    assert_equal(16, model_two.mines_board.length)
   end
 
   def test_amount_of_mines
-    model_1 = MinesweeperModel.new
-    assert_equal(0, model_1.positions.length())
-    model_1.init_board(1)
-    assert_equal(10, model_1.positions.length())
-    model_2 = MinesweeperModel.new
-    model_2.init_board(2)
-    assert_equal(40, model_2.positions.length())
+    model_one = MinesweeperModel.new
+    assert_equal(0, model_one.positions.length)
+    model_one.init_board(1)
+    assert_equal(10, model_one.positions.length)
+    model_two = MinesweeperModel.new
+    model_two.init_board(2)
+    assert_equal(40, model_two.positions.length)
   end
 
   def test_lose
@@ -58,22 +57,25 @@ class MinesweeperModelTest < Test::Unit::TestCase
     assert_false(model.won)
   end
 
+  def won_situation(model, row, col)
+    if model.mines_board[row][col].obtain_value != '*' &&
+       !model.mines_board[row][col].status && !(row.zero? && col.zero?)
+      model.change_status(row, col)
+    end
+  end
+
   def test_won
     srand(123)
     model = MinesweeperModel.new
     model.init_board(1)
-    #recorro todas las posiciones sin minas menos la 0,0
+    # recorro todas las posiciones sin minas menos la 0,0
     (0..model.number).step(1) do |row|
       (0..model.number).step(1) do |col|
-        if model.mines_board[row][col].obtain_value != '*' && !model.mines_board[row][col].status
-          model.change_status(row,col) unless row==0 && col==0
-        end
+        won_situation(model, row, col)
       end
     end
     # se que en esta posición NO hay una mina
-    model.change_status(0,0)
+    model.change_status(0, 0)
     assert_true(model.won)
   end
-
-
 end
