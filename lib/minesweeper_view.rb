@@ -8,6 +8,7 @@ class MinesweeperView < Observer
 
   def initialize
     @difficult = 0
+    super()
   end
 
   def update(minesweeper_model)

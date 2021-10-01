@@ -69,22 +69,25 @@ class MinesweeperModel < Observable
   def add_numbers(number)
     (0..number).step(1) do |row|
       (0..number).step(1) do |col|
-        check_coor(row, col, number) if @mines_board[row][col].obtain_value != '*'
+        check_coor(row, col, number, true) if @mines_board[row][col].obtain_value != '*'
       end
     end
   end
 
-  def check_coor(row, col, number)
+  def check_coor(row, col, number, count)
     coordenates = [[-1, -1], [0, -1], [1, -1], [1, 0], [1, 1], [0, 1], [-1, 1], [-1, 0]]
 
     coordenates -= [[-1, -1], [-1, 1], [-1, 0]] if (row - 1).negative?
     coordenates -= [[-1, -1], [0, -1], [1, -1]] if (col - 1).negative?
     coordenates -= [[1, -1], [1, 1], [1, 0]] if (row + 1) > number
     coordenates -= [[-1, 1], [0, 1], [1, 1]] if (col + 1) > number
-  
-    count_mines(row, col, coordenates)
+    if count
+      count_mines(row, col, coordenates)
+    else
+      change_status_caller(row, col, coordenates)
+    end
   end
-  
+
   def count_mines(row, col, coordenates)
     count = 0
     coordenates.each do |coor|
@@ -93,42 +96,21 @@ class MinesweeperModel < Observable
     @mines_board[row][col].give_value(count)
   end
 
-  def change_status(row, col)
-    @mines_board[row][col].show
-    if (@mines_board[row][col].obtain_value.is_a? Numeric) && @mines_board[row][col].obtain_value.zero?
-      if !(row - 1).negative? && !(col - 1).negative? && @mines_board[row - 1][col - 1].obtain_value != '*' && !@mines_board[row - 1][col - 1].status
-        change_status(row - 1,
-                      col - 1)
-      end
-      if !(row - 1).negative? && @mines_board[row - 1][col].obtain_value != '*' && !@mines_board[row - 1][col].status
-        change_status(row - 1,
-                      col)
-      end
-      if !(row - 1).negative? && (col + 1) <= @number && @mines_board[row - 1][col + 1].obtain_value != '*' && !@mines_board[row - 1][col + 1].status
-        change_status(row - 1,
-                      col + 1)
-      end
-      if !(col - 1).negative? && @mines_board[row][col - 1].obtain_value != '*' && !@mines_board[row][col - 1].status
-        change_status(row,
-                      col - 1)
-      end
-      if (col + 1) <= @number && @mines_board[row][col + 1].obtain_value != '*' && !@mines_board[row][col + 1].status
-        change_status(row,
-                      col + 1)
-      end
-      if (row + 1) <= @number && !(col - 1).negative? && @mines_board[row + 1][col - 1].obtain_value != '*' && !@mines_board[row + 1][col - 1].status
-        change_status(row + 1,
-                      col - 1)
-      end
-      if (row + 1) <= @number && @mines_board[row + 1][col].obtain_value != '*' && !@mines_board[row + 1][col].status
-        change_status(row + 1,
-                      col)
-      end
-      if (row + 1) <= @number && (col + 1) <= @number && @mines_board[row + 1][col + 1].obtain_value != '*' && !@mines_board[row + 1][col + 1].status
-        change_status(row + 1,
-                      col + 1)
+  def change_status_caller(row, col, coordenates)
+    coordenates.each do |coor|
+      new_row = row + coor[0]
+      new_col = col + coor[1]
+      if !@mines_board[new_row][new_col].status && @mines_board[new_row][new_col].obtain_value != '*'
+        change_status(new_row, new_col)
       end
     end
+  end
+
+  def change_status(row, col)
+    @mines_board[row][col].show
+    return unless (@mines_board[row][col].obtain_value.is_a? Numeric) && @mines_board[row][col].obtain_value.zero?
+
+    check_coor(row, col, @number, false)
   end
 
   def won
