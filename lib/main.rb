@@ -8,5 +8,6 @@ model = MinesweeperModel.new
 view = MinesweeperView.new
 model.add_observer(view)
 controller = MinesweeperController.new(model, view)
-controller.request_difficult
+controller.view.request_difficult
+controller.init_board(controller.view.difficult)
 controller.request_move

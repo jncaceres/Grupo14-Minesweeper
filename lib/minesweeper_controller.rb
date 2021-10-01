@@ -2,32 +2,34 @@
 
 # Controlador del juego
 class MinesweeperController
-  attr_accessor :model, :view
+  attr_accessor :model, :view, :pos_x, :pos_y
   
   def initialize(minesweeper_model, minesweeper_view)
     @model = minesweeper_model
     @view = minesweeper_view
+    @pos_x = -1
+    @pos_y = -1
   end
 
-  def request_difficult
-    difficult = 0
-    until [1, 2].include?(difficult)
-      @view.show_difficults
-      difficult = $stdin.gets.to_i
-    end
-    init_board(difficult)
-  end
+  # def request_difficult  
+  #   until [1, 2].include?(difficult)
+  #     @view.show_difficults
+  #     @difficult = $stdin.gets.to_i
+  #   end
+  #   init_board(@difficult)
+  # end
 
   def request_move
-    x, y = -1, -1
-    until valid_move(x, y)
+    until valid_move(pos_x, pos_y)
       @view.show_valid_values(@model.obtain_number)
       @view.ask_next_move_x
-      x = $stdin.gets.to_i
+      @pos_x = $stdin.gets.to_i
       @view.ask_next_move_y
-      y = $stdin.gets.to_i
-      move(x, y)
+      @pos_y = $stdin.gets.to_i
+      move(@pos_x, @pos_y)
     end
+    @pos_x = -1
+    @pos_y = -1
   end
 
   def move(x, y)
