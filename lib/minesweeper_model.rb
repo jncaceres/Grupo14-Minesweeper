@@ -69,26 +69,28 @@ class MinesweeperModel < Observable
   def add_numbers(number)
     (0..number).step(1) do |row|
       (0..number).step(1) do |col|
-        if @mines_board[row][col].obtain_value != '*'
-          count = 0
-          if !(row - 1).negative? && !(col - 1).negative? && @mines_board[row - 1][col - 1].obtain_value == '*'
-            count += 1
-          end
-          count += 1 if !(row - 1).negative? && @mines_board[row - 1][col].obtain_value == '*'
-          if !(row - 1).negative? && (col + 1) <= number && @mines_board[row - 1][col + 1].obtain_value == '*'
-            count += 1
-          end
-          count += 1 if !(col - 1).negative? && @mines_board[row][col - 1].obtain_value == '*'
-          count += 1 if (col + 1) <= number && @mines_board[row][col + 1].obtain_value == '*'
-          if (row + 1) <= number && !(col - 1).negative? && @mines_board[row + 1][col - 1].obtain_value == '*'
-            count += 1
-          end
-          count += 1 if (row + 1) <= number && @mines_board[row + 1][col].obtain_value == '*'
-          count += 1 if (row + 1) <= number && (col + 1) <= number && @mines_board[row + 1][col + 1].obtain_value == '*'
-          @mines_board[row][col].give_value(count)
-        end
+        check_coor(row, col, number) if @mines_board[row][col].obtain_value != '*'
       end
     end
+  end
+
+  def check_coor(row, col, number)
+    coordenates = [[-1, -1], [0, -1], [1, -1], [1, 0], [1, 1], [0, 1], [-1, 1], [-1, 0]]
+
+    coordenates -= [[-1, -1], [-1, 1], [-1, 0]] if (row - 1).negative?
+    coordenates -= [[-1, -1], [0, -1], [1, -1]] if (col - 1).negative?
+    coordenates -= [[1, -1], [1, 1], [1, 0]] if (row + 1) > number
+    coordenates -= [[-1, 1], [0, 1], [1, 1]] if (col + 1) > number
+  
+    count_mines(row, col, coordenates)
+  end
+  
+  def count_mines(row, col, coordenates)
+    count = 0
+    coordenates.each do |coor|
+      count += 1 if @mines_board[row + coor[0]][col + coor[1]].obtain_value == '*'
+    end
+    @mines_board[row][col].give_value(count)
   end
 
   def change_status(row, col)

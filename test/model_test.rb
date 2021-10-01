@@ -3,7 +3,6 @@
 require_relative 'test_helper'
 require_relative '../lib/minesweeper_model'
 require_relative '../lib/minesweeper_controller'
-require_relative './controller_test'
 require 'test/unit'
 
 class MinesweeperModelTest < Test::Unit::TestCase
@@ -58,6 +57,7 @@ class MinesweeperModelTest < Test::Unit::TestCase
     model.change_status(0, 0)
     assert_false(model.won)
   end
+
   def test_won
     srand(123)
     model = MinesweeperModel.new
