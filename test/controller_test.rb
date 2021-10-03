@@ -17,13 +17,13 @@ class MinesweeperControllerTest < Test::Unit::TestCase
   end
 
   # Al tener una dificultad valida el tablero se crea
-  def test_init_board
+  def test_generate_board
     model = MinesweeperModel.new
     view = MinesweeperView.new
     model.add_observer(view)
     controller = MinesweeperController.new(model, view)
     controller.view.difficult += 1
-    controller.init_board(controller.view.difficult)
+    controller.generate_board(controller.view.difficult)
     assert_not_nil(model.mines_board)
   end
 
@@ -81,5 +81,18 @@ class MinesweeperControllerTest < Test::Unit::TestCase
     controller.move(1, 0)
     assert_equal(1, controller.model.is_called_notify_all)
     assert_true(controller.model.lose) # Si se gana es por que se movió
+  end
+
+  def test_reset_move_position
+    model = MinesweeperModel.new
+    view = MinesweeperView.new
+    model.add_observer(view)
+    model.init_board(1)
+    controller = MinesweeperController.new(model, view)
+
+    controller.request_move(1, 1)
+
+    assert_equal(-1, controller.pos_x)
+    assert_equal(-1, controller.pos_y)
   end
 end

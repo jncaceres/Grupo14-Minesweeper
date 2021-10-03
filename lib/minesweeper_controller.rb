@@ -11,13 +11,10 @@ class MinesweeperController
     @pos_y = -1
   end
 
-  def request_move
-    until valid_move(pos_x, pos_y)
-      @view.show_valid_values(@model.number)
-      @view.ask_next_move_x
-      @pos_x = $stdin.gets.to_i
-      @view.ask_next_move_y
-      @pos_y = $stdin.gets.to_i
+  def request_move(pos_x, pos_y)
+    if valid_move(pos_x, pos_y)
+      @pos_x = pos_x
+      @pos_y = pos_y
       move(@pos_x, @pos_y)
     end
     @pos_x = -1
@@ -31,8 +28,6 @@ class MinesweeperController
       @view.congratulations
     elsif @model.lose
       @view.lose_msg
-    else
-      request_move
     end
   end
 
@@ -42,7 +37,7 @@ class MinesweeperController
     false
   end
 
-  def init_board(difficult)
+  def generate_board(difficult)
     @model.init_board(difficult)
     @view.print_board(@model)
   end
