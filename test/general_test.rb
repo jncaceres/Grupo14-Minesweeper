@@ -10,6 +10,10 @@ class MinesweeperModelTest < Test::Unit::TestCase
 
   def some_test
   end
+  def moretest
+  end
+  def detailteest
+  end
   
 
 
